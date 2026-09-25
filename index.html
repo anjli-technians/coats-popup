@@ -127,19 +127,22 @@
         .video-drawer {
             position: absolute;
             top: 0;
-            left: 0px;
+            /* left: 0px; */
             bottom: 0;
             margin: auto;margin-top: 40px;
             width: 320px;
             height: 70%;
             z-index: 15;
             background: #ffffff6e;
-            transform: translateX(-120%);
+            transform: translateX(-200%);
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 8px 0 30px rgba(0, 0, 0, 0.18);
-            display: flex;border-radius: 0px 12px 12px 0px;
+            display: flex;border-radius: 12px;
             align-items: center;backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%); /* Required for Safari support */
+  -webkit-backdrop-filter: blur(10px) saturate(120%); /* Required for Safari support */position: absolute;
+    z-index: 3;
+    left: 13%;
+    color: #fff;
         }
 
 
@@ -553,42 +556,51 @@ svg.swiper-navigation-icon {
                     </button>
 
                     <!-- LEFT DRAWER -->
-                    <div class="video-drawer">
+                     <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4">
 
-                        <button
-                            type="button"
-                            class="drawer-close"
-                            aria-label="Close drawer"
-                        >
-                            &times;
-                        </button>
+                                <div class="video-popup">
+                                    <div class="video-drawer">
 
-                        <div class="video-drawer-content">
-<img src="https://www.coatsdigital.com/wp-content/uploads/2026/09/GSD-RealMotion-Flyer_logo.png" alt="GSD RealMotion Logo" style="width: 200px; margin-bottom: 20px;margin-left: -15px;">
-                            <span class="video-drawer-label">
-                                Reference
-                            </span>
+                                    <button
+                                        type="button"
+                                        class="drawer-close"
+                                        aria-label="Close drawer"
+                                    >
+                                        &times;
+                                    </button>
 
-                            <h3>Explore More</h3>
+                                    <div class="video-drawer-content">
+                                        <img src="https://www.coatsdigital.com/wp-content/uploads/2026/09/GSD-RealMotion-Flyer_logo.png" alt="GSD RealMotion Logo" style="width: 200px; margin-bottom: 20px;margin-left: -15px;">
+                                        <span class="video-drawer-label">
+                                            Reference
+                                        </span>
 
-                            <p>
-                                Want to know more about this video?
-                                Check the reference link below.
-                            </p>
+                                        <h3>Explore More</h3>
 
-                            <a
-                                href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="reference-link"
-                            >
-                                View Reference
-                                <span>→</span>
-                            </a>
+                                        <p>
+                                            Want to know more about this video?
+                                            Check the reference link below.
+                                        </p>
 
+                                        <a
+                                            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="reference-link"
+                                        >
+                                            View Reference
+                                            <span>→</span>
+                                        </a>
+
+                                    </div>
+
+                                </div>
+                                </div>
+                            </div>
                         </div>
-
-                    </div>
+                     </div>
 
                 </div>
 

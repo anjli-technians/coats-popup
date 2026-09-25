@@ -7,10 +7,12 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Video Pause Side Drawer</title>
+    <title>Coats Video & Image Swiper</title>
 
 
     <!-- Bootstrap 5 -->
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -37,7 +39,7 @@
 
         .video-section {
             position: relative;
-            overflow: hidden;
+            overflow: hidden;height: 90vh;
         }
 
 
@@ -124,26 +126,18 @@
 
         .video-drawer {
             position: absolute;
-
             top: 0;
-            left: 0;
-
-            width: 360px;
-            height: 100%;
-
+            left: 0px;
+            bottom: 0;
+            margin: auto;
+            width: 320px;
+            height: 70%;
             z-index: 15;
-
             background: #fff;
-
-            transform: translateX(-100%);
-
-            transition:
-                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-
-            box-shadow:
-                8px 0 30px rgba(0, 0, 0, 0.18);
-
-            display: flex;
+            transform: translateX(-120%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 8px 0 30px rgba(0, 0, 0, 0.18);
+            display: flex;border-radius: 0px 12px 12px 0px;
             align-items: center;
         }
 
@@ -164,14 +158,14 @@
 
         .video-drawer-content {
             width: 100%;
-            padding: 40px 30px;
+            padding: 40px 30px 40px 60px;
         }
 
 
         .video-drawer-label {
             display: inline-block;
 
-            margin-bottom: 15px;
+            margin-bottom: 5px;
 
             font-size: 12px;
             font-weight: 700;
@@ -189,7 +183,7 @@
 
             font-size: 30px;
             line-height: 1.2;
-
+font-weight: 600;
             color: #002a54;
         }
 
@@ -209,26 +203,26 @@
         ========================================= */
 
         .reference-link {
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            padding: 12px 22px;
-
-            background: #002a54;
-
-            color: #fff;
-
-            text-decoration: none;
-
-            border-radius: 5px;
-
-            font-size: 15px;
-            font-weight: 600;
-
             transition: all 0.3s ease;
+    display: inline-flex;
+    visibility: visible;
+    opacity: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 145px;
+    height: 46px;
+    padding: 0 22px;
+    border-radius: 999px;
+    background: #66bd45;
+    border: 1px solid #66bd45;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 1;
+    font-weight: 700;
+    position: relative;
+    z-index: 5;
         }
 
 
@@ -244,32 +238,22 @@
 
         .drawer-close {
             position: absolute;
-
-            top: 15px;
-            right: 15px;
-
-            width: 34px;
-            height: 34px;
-
-            border: 0;
-
-            border-radius: 50%;
-
-            background: #f1f1f1;
-
-            color: #002a54;
-
-            font-size: 22px;
-
-            cursor: pointer;
-
-            z-index: 2;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            transition: all 0.3s ease;
+    top: 15px;
+    right: 15px;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 50%;
+    background: #f1f1f1;
+    color: #002a54;
+    font-size: 23px;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 1px solid #002a540a;
         }
 
 
@@ -315,6 +299,199 @@
 
         }
 
+
+        /* =========================================
+           SWIPER
+        ========================================= */
+
+        .video-swiper {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .video-swiper .swiper-wrapper {
+            align-items: stretch;
+        }
+
+        .video-swiper .swiper-slide {
+            height: auto;
+            position: relative;
+        }
+
+        .image-slide {
+            overflow: hidden;
+            background: #000;
+        }
+
+        .image-slide img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        /* =========================================
+           MUTE / UNMUTE BUTTON
+        ========================================= */
+
+        .video-mute-toggle {
+            position: absolute;
+            top: 20px;
+            right: 80px;
+
+            width: 48px;
+            height: 48px;
+
+            z-index: 20;
+
+            border: 0;
+            border-radius: 50%;
+
+            background: rgba(0, 42, 84, 0.9);
+            color: #fff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+            font-size: 17px;
+
+            transition: all 0.3s ease;
+        }
+
+        .video-mute-toggle:hover {
+            background: #1698b7;
+        }
+
+        .video-mute-toggle .volume-off-icon {
+            display: none;
+        }
+
+        .video-wrapper.is-muted
+        .video-mute-toggle .volume-on-icon {
+            display: none;
+        }
+
+        .video-wrapper.is-muted
+        .video-mute-toggle .volume-off-icon {
+            display: inline-block;
+        }
+
+        /* =========================================
+           SWIPER CONTROLS
+        ========================================= */
+
+        .video-swiper .swiper-button-prev,
+        .video-swiper .swiper-button-next {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(0, 42, 84, 0.9);
+            color: #fff;
+        }
+
+        .video-swiper .swiper-button-prev:hover,
+        .video-swiper .swiper-button-next:hover {
+            background: #1698b7;
+        }
+
+        .video-swiper .swiper-button-prev::after,
+        .video-swiper .swiper-button-next::after {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .video-swiper .swiper-pagination-bullet {
+            opacity: 1;
+            background: #fff;
+        }
+
+        .video-swiper .swiper-pagination-bullet-active {
+            background: #1698b7;
+        }
+
+        @media (max-width: 767.98px) {
+
+            .video-mute-toggle {
+                top: 12px;
+                right: 64px;
+                width: 42px;
+                height: 42px;
+            }
+
+            .video-swiper .swiper-button-prev,
+            .video-swiper .swiper-button-next {
+                width: 34px;
+                height: 34px;
+            }
+
+            .video-swiper .swiper-button-prev::after,
+            .video-swiper .swiper-button-next::after {
+                font-size: 13px;
+            }
+
+        }
+svg.swiper-navigation-icon {
+    font-size: 20px;
+    height: 14px;
+}.banner-content {
+    position: absolute;
+    z-index: 3;
+    left: 13%;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 540px;
+    max-width: 42vw;
+    color: #fff;
+} .banner-title {
+    margin: 0 0 26px !important;
+    padding: 0 !important;
+    font-size: clamp(46px, 3.05vw, 58px) !important;
+    line-height: 1.14 !important;
+    font-weight: 400 !important;
+}  .banner-title strong {
+    display: block;
+    font-weight: 700 !important;
+} .banner-content p {
+    max-width: 450px;
+    width: 450px;
+    margin: 0 0 26px !important;
+    padding: 0 !important;
+    font-size: clamp(17px, 1.05vw, 21px) !important;
+    line-height: 1.55 !important;
+    font-weight: 400 !important;
+} .btn-learn {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 145px;
+    height: 46px;
+    padding: 0 22px;
+    border-radius: 999px;
+    background: #66bd45 !important;
+    border: 1px solid #66bd45 !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    font-size: 15px;
+    line-height: 1;
+    font-weight: 700;
+    position: relative;
+    z-index: 5;transform: translateY(20px);
+    transition: all .4s ease;
+} .btn-learn:hover {
+    background: #fff !important;
+    color: #66bd45 !important;
+}.banner-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.75) 25%, rgba(0, 0, 0, 0.42) 55%, rgba(0, 0, 0, 0.08) 100%);
+}
     </style>
 
 </head>
@@ -329,107 +506,74 @@
 
 <section class="video-section">
 
+    <div class="swiper video-swiper">
 
-    <div class="container-fluid">
+        <div class="swiper-wrapper">
 
-
-        <div class="row justify-content-center">
-
-
-            <div class="col-lg-12 p-0">
-
-
-                <!-- =====================================
-                     VIDEO WRAPPER
-                ====================================== -->
+            <!-- ==============================
+                 VIDEO SLIDE
+            =============================== -->
+            <div class="swiper-slide">
 
                 <div class="video-wrapper">
 
-
-                    <!-- =================================
-                         REAL VIDEO
-                    ================================== -->
-
                     <video
                         class="pause-drawer-video"
-                        preload="metadata"
+                        preload="auto"
+                        autoplay
                         playsinline
                     >
-
-                        <!-- REAL PUBLIC VIDEO -->
-
                         <source
                             src="https://dev.coatsdigital.com/wp-content/uploads/2026/09/homepage-video-1.mp4"
                             type="video/mp4"
                         >
-
                         Your browser does not support HTML5 video.
-
                     </video>
 
-
-                    <!-- =================================
-                         PLAY / PAUSE BUTTON
-                    ================================== -->
-
+                    <!-- PLAY / PAUSE -->
                     <button
                         type="button"
                         class="video-play-pause"
-                        aria-label="Play video"
+                        aria-label="Pause video"
                     >
-
-                        <span class="play-icon">
-                            ▶
-                        </span>
-
-                        <span class="pause-icon">
-                            ❚❚
-                        </span>
-
+                        <span class="play-icon">▶</span>
+                        <span class="pause-icon">❚❚</span>
                     </button>
 
+                    <!-- MUTE / UNMUTE -->
+                    <button
+                        type="button"
+                        class="video-mute-toggle"
+                        aria-label="Mute video"
+                        aria-pressed="false"
+                    >
+                        <span class="volume-on-icon">🔊</span>
+                        <span class="volume-off-icon">🔇</span>
+                    </button>
 
-                    <!-- =================================
-                         LEFT DRAWER
-                    ================================== -->
-
+                    <!-- LEFT DRAWER -->
                     <div class="video-drawer">
-
-
-                        <!-- CLOSE BUTTON -->
 
                         <button
                             type="button"
                             class="drawer-close"
                             aria-label="Close drawer"
                         >
-
                             &times;
-
                         </button>
 
-
-                        <!-- DRAWER CONTENT -->
-
                         <div class="video-drawer-content">
-
-
+<img src="https://www.coatsdigital.com/wp-content/uploads/2026/09/GSD-RealMotion-Flyer_logo.png" alt="GSD RealMotion Logo" style="width: 200px; margin-bottom: 20px;margin-left: -15px;">
                             <span class="video-drawer-label">
                                 Reference
                             </span>
 
-
-                            <h3>
-                                Explore More
-                            </h3>
-
+                            <h3>Explore More</h3>
 
                             <p>
-                                Want to know more about this
-                                video? Check the reference
-                                link below.
+                                Want to know more about this video?
+                                Check the reference link below.
                             </p>
-
 
                             <a
                                 href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video"
@@ -437,28 +581,110 @@
                                 rel="noopener noreferrer"
                                 class="reference-link"
                             >
-
                                 View Reference
-
-                                <span>
-                                    →
-                                </span>
-
+                                <span>→</span>
                             </a>
-
 
                         </div>
 
-
                     </div>
-
 
                 </div>
 
+            </div>
 
+            <!-- ==============================
+                 IMAGE SLIDE 1
+            =============================== -->
+            <div class="swiper-slide image-slide">
+                <img
+                    src="https://dev.coatsdigital.com/wp-content/uploads/2026/07/Image-coats-1.jpg"
+                    alt="Coats"
+                ><div class="banner-overlay"></div><div class="banner-content">
+
+                            
+                                <h1 class="banner-title">
+
+                                    Coats and JACK
+                                    
+                                        <strong>
+                                            announce strategic partnership                                        </strong>
+
+                                    
+                                </h1>
+
+                            
+                            
+                                <p>
+                                    Coats and Jack signed a Memorandum of Strategic Cooperation to accelerate innovation for China’s fast-growing small-to-medium-sized (SME) apparel manufacturing sector.                                </p>
+
+                            
+                            
+                                <a href="#" class="btn-learn">
+                                    Learn More                                    <span>→</span>
+                                </a>
+
+                            
+                        </div>
+            </div>
+
+            <!-- ==============================
+                 IMAGE SLIDE 2
+            =============================== -->
+            <div class="swiper-slide image-slide">
+                <img
+                    src="https://dev.coatsdigital.com/wp-content/uploads/2026/09/Hero_banner.jpg"
+                    alt="Coats Hero Banner"
+                >
+                <div class="banner-overlay"></div>
+                <div class="banner-content">
+
+                            
+                                <h1 class="banner-title">
+
+                                    Real - Time Shop Floor 
+                                    
+                                        <strong>
+                                            Intelligence for better Margins                                        </strong>
+
+                                    
+                                </h1>
+
+                            
+                            
+                                <p>
+                                    GSD RealMotion makes the real method on your shop floor visible, measurable and improvable, from a phone video, in minutes instead of hours.                                </p>
+
+                            
+                            
+                                <a href="#" class="btn-learn">
+                                    Learn More                                    <span>→</span>
+                                </a>
+
+                            
+                        </div>
+            </div>
+
+            <!-- ==============================
+                 IMAGE SLIDE 3
+            =============================== -->
+            <div class="swiper-slide image-slide">
+                <img src="https://dev.coatsdigital.com/wp-content/uploads/2026/07/Image-coats-.jpg" alt="Coats" ><div class="banner-overlay"></div>
+                <div class="banner-content">                           
+                    <h1 class="banner-title"> Coats and JACK <strong> announce strategic partnership </strong> </h1> 
+                    <p> The integrated solution will help SME manufacturers in China to identify and address shop floor inefficiencies in real-time, improve productivity and manage inventory levels more effectively. </p> 
+                    <a href="#" class="btn-learn"> Learn More <span>→</span> </a> 
+            </div>
             </div>
 
         </div>
+
+        <!-- Swiper Pagination -->
+        <div class="swiper-pagination"></div>
+
+        <!-- Swiper Navigation -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
 
     </div>
 
@@ -470,56 +696,306 @@
      JAVASCRIPT
 ===================================================== -->
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | GET ALL VIDEO SECTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    const videoSections =
-        document.querySelectorAll(".video-section");
-
+    const videoSections = document.querySelectorAll(".video-section");
 
     videoSections.forEach(function (section) {
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | ELEMENTS
-        |--------------------------------------------------------------------------
-        */
-
-        const wrapper =
-            section.querySelector(".video-wrapper");
-
-        const video =
-            section.querySelector(".pause-drawer-video");
-
-        const playPauseButton =
-            section.querySelector(".video-play-pause");
-
-        const drawerClose =
-            section.querySelector(".drawer-close");
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | SAFETY CHECK
-        |--------------------------------------------------------------------------
-        */
+        const swiperElement = section.querySelector(".video-swiper");
+        const video = section.querySelector(".pause-drawer-video");
+        const wrapper = section.querySelector(".video-wrapper");
+        const playPauseButton = section.querySelector(".video-play-pause");
+        const muteButton = section.querySelector(".video-mute-toggle");
+        const drawerClose = section.querySelector(".drawer-close");
 
         if (
-            !wrapper ||
+            !swiperElement ||
             !video ||
+            !wrapper ||
             !playPauseButton ||
+            !muteButton ||
             !drawerClose
         ) {
             return;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | VIDEO AUTOPLAY
+        |--------------------------------------------------------------------------
+        */
+
+        let autoplayAttempt = false;
+
+
+        function startVideo() {
+
+            /*
+             * First try autoplay WITH AUDIO
+             */
+            video.muted = false;
+            video.volume = 1;
+
+            wrapper.classList.remove("is-muted");
+
+
+            const playPromise = video.play();
+
+
+            if (playPromise !== undefined) {
+
+                playPromise.then(function () {
+
+                    /*
+                     * Audio autoplay successfully allowed
+                     */
+
+                    video.muted = false;
+                    video.volume = 1;
+
+                    wrapper.classList.remove("is-muted");
+
+                    muteButton.setAttribute(
+                        "aria-label",
+                        "Mute video"
+                    );
+
+                    muteButton.setAttribute(
+                        "aria-pressed",
+                        "false"
+                    );
+
+                    autoplayAttempt = true;
+
+                }).catch(function () {
+
+                    /*
+                     * Browser blocked audible autoplay.
+                     *
+                     * Do NOT keep throwing console errors.
+                     *
+                     * Start muted so video autoplay
+                     * and Swiper functionality continue.
+                     */
+
+                    video.muted = true;
+                    video.volume = 1;
+
+                    wrapper.classList.add("is-muted");
+
+                    muteButton.setAttribute(
+                        "aria-label",
+                        "Unmute video"
+                    );
+
+                    muteButton.setAttribute(
+                        "aria-pressed",
+                        "true"
+                    );
+
+
+                    /*
+                     * Muted autoplay is allowed by browsers.
+                     */
+
+                    video.play().then(function () {
+
+                        autoplayAttempt = true;
+
+                    }).catch(function () {
+
+                        /*
+                         * Nothing to do here.
+                         *
+                         * Browser can still require
+                         * a user interaction.
+                         */
+
+                    });
+
+                });
+
+            }
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SWIPER
+        |--------------------------------------------------------------------------
+        */
+
+        const videoimgswiper = new Swiper(swiperElement, {
+
+            slidesPerView: 1,
+
+            loop: true,
+
+            speed: 700,
+
+
+            navigation: {
+
+                nextEl:
+                    section.querySelector(".swiper-button-next"),
+
+                prevEl:
+                    section.querySelector(".swiper-button-prev")
+
+            },
+
+
+            pagination: {
+
+                el:
+                    section.querySelector(".swiper-pagination"),
+
+                clickable: true
+
+            },
+
+
+            autoplay: {
+
+                delay: 3000,
+
+                disableOnInteraction: false,
+
+                pauseOnMouseEnter: false
+
+            },
+
+
+            on: {
+
+                init: function () {
+
+                    handleSlideChange(this);
+
+                },
+
+
+                slideChangeTransitionStart: function () {
+
+                    handleSlideChange(this);
+
+                }
+
+            }
+
+        });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | HANDLE ACTIVE SLIDE
+        |--------------------------------------------------------------------------
+        */
+
+        function handleSlideChange(swiperInstance) {
+
+            const activeSlide =
+                swiperInstance.slides[
+                    swiperInstance.activeIndex
+                ];
+
+
+            if (!activeSlide) {
+                return;
+            }
+
+
+            const activeVideo =
+                activeSlide.querySelector("video");
+
+
+            /*
+             * Stop all other videos
+             */
+
+            swiperInstance.el
+                .querySelectorAll("video")
+                .forEach(function (otherVideo) {
+
+                    if (otherVideo !== activeVideo) {
+
+                        otherVideo.pause();
+
+                        otherVideo.currentTime = 0;
+
+                    }
+
+                });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | VIDEO SLIDE
+            |--------------------------------------------------------------------------
+            */
+
+            if (activeVideo) {
+
+                /*
+                 * Stop Swiper autoplay
+                 */
+
+                swiperInstance.autoplay.stop();
+
+
+                /*
+                 * Close drawer
+                 */
+
+                section.classList.remove(
+                    "drawer-open"
+                );
+
+
+                /*
+                 * Start video from beginning
+                 */
+
+                activeVideo.currentTime = 0;
+
+
+                /*
+                 * Try autoplay
+                 */
+
+                startVideo();
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | IMAGE SLIDE
+            |--------------------------------------------------------------------------
+            */
+
+            else {
+
+                section.classList.remove(
+                    "drawer-open"
+                );
+
+
+                /*
+                 * Images change every 3 seconds
+                 */
+
+                swiperInstance.autoplay.start();
+
+            }
+
         }
 
 
@@ -529,33 +1005,25 @@ document.addEventListener("DOMContentLoaded", function () {
         |--------------------------------------------------------------------------
         */
 
-        video.addEventListener("play", function () {
+        video.addEventListener(
+            "play",
+            function () {
 
+                wrapper.classList.add(
+                    "is-playing"
+                );
 
-            /*
-            * Show pause icon
-            */
+                section.classList.remove(
+                    "drawer-open"
+                );
 
-            wrapper.classList.add("is-playing");
+                playPauseButton.setAttribute(
+                    "aria-label",
+                    "Pause video"
+                );
 
-
-            /*
-            * Close drawer
-            */
-
-            section.classList.remove("drawer-open");
-
-
-            /*
-            * Accessibility
-            */
-
-            playPauseButton.setAttribute(
-                "aria-label",
-                "Pause video"
-            );
-
-        });
+            }
+        );
 
 
         /*
@@ -564,55 +1032,48 @@ document.addEventListener("DOMContentLoaded", function () {
         |--------------------------------------------------------------------------
         */
 
-        video.addEventListener("pause", function () {
+        video.addEventListener(
+            "pause",
+            function () {
+
+                if (video.ended) {
+                    return;
+                }
 
 
-            /*
-            * Don't open drawer when video has ended
-            */
+                /*
+                 * If browser temporarily paused the video
+                 * during initial autoplay attempt,
+                 * don't immediately open the drawer.
+                 */
 
-            if (video.ended) {
+                if (!autoplayAttempt) {
+                    return;
+                }
 
-                section.classList.remove(
-                    "drawer-open"
-                );
 
                 wrapper.classList.remove(
                     "is-playing"
                 );
 
-                return;
+                section.classList.add(
+                    "drawer-open"
+                );
+
+                playPauseButton.setAttribute(
+                    "aria-label",
+                    "Play video"
+                );
+
+
+                /*
+                 * Stop Swiper autoplay
+                 */
+
+                videoimgswiper.autoplay.stop();
+
             }
-
-
-            /*
-            * Change icon
-            */
-
-            wrapper.classList.remove(
-                "is-playing"
-            );
-
-
-            /*
-            * OPEN LEFT DRAWER
-            */
-
-            section.classList.add(
-                "drawer-open"
-            );
-
-
-            /*
-            * Accessibility
-            */
-
-            playPauseButton.setAttribute(
-                "aria-label",
-                "Play video"
-            );
-
-        });
+        );
 
 
         /*
@@ -626,33 +1087,34 @@ document.addEventListener("DOMContentLoaded", function () {
             function (e) {
 
                 e.preventDefault();
-
                 e.stopPropagation();
 
 
-                /*
-                * If paused → PLAY
-                */
-
                 if (video.paused) {
 
-                    video.play().catch(
-                        function (error) {
-
-                            console.log(
-                                "Video play error:",
-                                error
-                            );
-
-                        }
+                    section.classList.remove(
+                        "drawer-open"
                     );
 
+
+                    video.muted = false;
+                    video.volume = 1;
+
+
+                    video.play().then(function () {
+
+                        autoplayAttempt = true;
+
+                    }).catch(function () {
+
+                        /*
+                         * User clicked play, so browser
+                         * should normally allow playback.
+                         */
+
+                    });
+
                 }
-
-
-                /*
-                * If playing → PAUSE
-                */
 
                 else {
 
@@ -666,9 +1128,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
         /*
         |--------------------------------------------------------------------------
+        | MUTE / UNMUTE
+        |--------------------------------------------------------------------------
+        */
+
+        muteButton.addEventListener(
+            "click",
+            function (e) {
+
+                e.preventDefault();
+                e.stopPropagation();
+
+
+                video.muted = !video.muted;
+
+
+                wrapper.classList.toggle(
+                    "is-muted",
+                    video.muted
+                );
+
+
+                muteButton.setAttribute(
+                    "aria-label",
+                    video.muted
+                        ? "Unmute video"
+                        : "Mute video"
+                );
+
+
+                muteButton.setAttribute(
+                    "aria-pressed",
+                    video.muted
+                        ? "true"
+                        : "false"
+                );
+
+            }
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
         | DRAWER CLOSE
-        |
-        | Close drawer + automatically play video
         |--------------------------------------------------------------------------
         */
 
@@ -677,13 +1179,8 @@ document.addEventListener("DOMContentLoaded", function () {
             function (e) {
 
                 e.preventDefault();
-
                 e.stopPropagation();
 
-
-                /*
-                * Close drawer
-                */
 
                 section.classList.remove(
                     "drawer-open"
@@ -691,19 +1188,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 /*
-                * Automatically play video
-                */
+                 * User has interacted with page,
+                 * so audio can be enabled.
+                 */
 
-                video.play().catch(
-                    function (error) {
+                video.muted = false;
+                video.volume = 1;
 
-                        console.log(
-                            "Video play error:",
-                            error
-                        );
 
-                    }
+                wrapper.classList.remove(
+                    "is-muted"
                 );
+
+
+                muteButton.setAttribute(
+                    "aria-label",
+                    "Mute video"
+                );
+
+
+                muteButton.setAttribute(
+                    "aria-pressed",
+                    "false"
+                );
+
+
+                video.play().then(function () {
+
+                    autoplayAttempt = true;
+
+                }).catch(function () {
+
+                    /*
+                     * Ignore browser autoplay rejection.
+                     */
+
+                });
 
             }
         );
@@ -723,18 +1243,166 @@ document.addEventListener("DOMContentLoaded", function () {
                     "drawer-open"
                 );
 
+
                 wrapper.classList.remove(
                     "is-playing"
                 );
+
 
                 playPauseButton.setAttribute(
                     "aria-label",
                     "Play video"
                 );
 
+
+                /*
+                 * Stop autoplay timer
+                 */
+
+                videoimgswiper.autoplay.stop();
+
+
+                /*
+                 * Move to next slide
+                 *
+                 * This happens ONLY after the
+                 * complete video duration.
+                 */
+
+                videoimgswiper.slideNext();
+
             }
         );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | USER DRAGS / CLICKS SWIPER
+        |--------------------------------------------------------------------------
+        */
+
+        videoimgswiper.on(
+            "touchStart",
+            function () {
+
+                videoimgswiper.autoplay.stop();
+
+            }
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SLIDE CHANGE CLEANUP
+        |--------------------------------------------------------------------------
+        */
+
+        videoimgswiper.on(
+            "slideChange",
+            function () {
+
+                const activeSlide =
+                    videoimgswiper.slides[
+                        videoimgswiper.activeIndex
+                    ];
+
+
+                if (!activeSlide) {
+                    return;
+                }
+
+
+                const activeVideo =
+                    activeSlide.querySelector(
+                        "video"
+                    );
+
+
+                if (!activeVideo) {
+
+                    section.classList.remove(
+                        "drawer-open"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | FIRST USER INTERACTION
+        |--------------------------------------------------------------------------
+        |
+        | If browser allowed only muted autoplay,
+        | enable audio after user's first interaction.
+        |
+        */
+
+        function enableAudioAfterInteraction() {
+
+            if (
+                video.paused ||
+                !video.closest(".swiper-slide") ||
+                !video.closest(".swiper-slide")
+                    .classList.contains("swiper-slide-active")
+            ) {
+                return;
+            }
+
+
+            if (video.muted) {
+
+                video.muted = false;
+                video.volume = 1;
+
+                wrapper.classList.remove(
+                    "is-muted"
+                );
+
+
+                muteButton.setAttribute(
+                    "aria-label",
+                    "Mute video"
+                );
+
+
+                muteButton.setAttribute(
+                    "aria-pressed",
+                    "false"
+                );
+
+            }
+
+        }
+
+
+        document.addEventListener(
+            "click",
+            enableAudioAfterInteraction,
+            {
+                once: true
+            }
+        );
+
+
+        document.addEventListener(
+            "touchstart",
+            enableAudioAfterInteraction,
+            {
+                once: true
+            }
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            enableAudioAfterInteraction,
+            {
+                once: true
+            }
+        );
 
     });
 

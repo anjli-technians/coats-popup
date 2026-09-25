@@ -129,7 +129,7 @@
             top: 0;
             left: 0px;
             bottom: 0;
-            margin: auto;
+            margin: auto;margin-top: 40px;
             width: 320px;
             height: 70%;
             z-index: 15;
@@ -138,7 +138,8 @@
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 8px 0 30px rgba(0, 0, 0, 0.18);
             display: flex;border-radius: 0px 12px 12px 0px;
-            align-items: center;
+            align-items: center;backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%); /* Required for Safari support */
         }
 
 

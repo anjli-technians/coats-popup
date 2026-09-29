@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<!-- This site is hosted on Netlify. Anyone can build and deploy a site
-     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=52355fb9-3e7f-4d46-8a4a-cd60d9d4fe1d
-     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta charset="UTF-8"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coats Video & Image Swiper</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -116,7 +116,7 @@ body { margin: 0; background: #f5f5f5; font-family: Arial, sans-serif; }
 .drawer-close:hover { background: #002a54; color: #fff; }
 
 /* ===== END POPUP (last 5 seconds, exact center, scale 0 -> 100%) ===== */
-.video-end-popup {
+/* .video-end-popup {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -135,31 +135,83 @@ body { margin: 0; background: #f5f5f5; font-family: Arial, sans-serif; }
 
     /* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35); */
 
-    opacity: 0;
+     /*opacity: 0;
     pointer-events: none;
 
     transform: translate(-50%, -50%) scale(0);
 
     /* Smooth 0 → 100% without bounce */
-    transition:
+    /* transition:
         transform 0.6s ease-out,
-        opacity 0.4s ease; 
-}
+        opacity 0.4s ease;  opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+} */
+ 
+    .video-end-popup {
+   max-width: 100%;
+    /* padding: 36px 40px; */ 
+    background: linear-gradient(180deg, #00000038 0%, #00000038 50%, #00000038 100%);
+    opacity: 0;
+    pointer-events: none;
+    /* transform: translate(-50%, -50%) scale(0); */
+    transition: transform 0.6s ease-out, opacity 0.4s ease;
+    /* opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1); */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    /* margin: auto; */
+    /* width: 320px; */
+    z-index: 3;
+    transform: none;
+    /* transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border-radius: 12px;
+    left: 13%;
+    color: #fff;
+    /* margin: auto; */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 13%;
+    z-index: 2;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.75) 25%, rgba(0, 0, 0, 0.42) 55%, rgba(0, 0, 0, 0.08) 100%);
+} 
+.end-popup-content{position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 320px;
+    /* height: fit-content; */
+    z-index: 3;
+    /* background: #ffffff6e; */
+    transform: translateX(-200%);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    /* box-shadow: 8px 0 30px rgba(0, 0, 0, 0.18); */
+    display: flex;
+    align-items: flex-start;
+    border-radius: 12px;
+    left: 13%;
+    color: #fff;
+    flex-direction: column;
+    justify-content: center;}
 
+.video-end-popup.show .end-popup-content { transform: translateX(0); }
 .video-end-popup.show {
     opacity: 1;
     pointer-events: auto;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translateX(0);
 }
-.video-end-popup img {
-    width: 100%; max-width: 240px; margin-bottom: 20px;
-    background: #fff; padding: 10px 14px; border-radius: 10px;
-}
-.video-end-popup p { margin: 0 0 24px; font-size: 26px; line-height: 1.3; font-weight: 600; color: #fff; }
-.video-end-popup .end-popup-btn { transform: none; }
-.video-end-popup .end-popup-btn:hover {
-    background: #fff !important; border-color: #fff !important; color: #66bd45 !important;
-}
+.video-end-popup img { width: 200px; max-width: 100%; margin: 0 0 20px -4px; }
+.video-end-popup p { margin: 0 0 10px; font-size: 16px; line-height: 1.6; font-weight: 400; color: #fff; }
 
 /* ===== SWIPER ===== */
 .video-swiper { width: 100%; position: relative;height: 100%; }
@@ -211,11 +263,25 @@ svg.swiper-navigation-icon { font-size: 20px; height: 14px; }
     background: linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.75) 25%, rgba(0,0,0,0.42) 55%, rgba(0,0,0,0.08) 100%);
 }
 
+/* ===== DRAWER HEADING (light line + bold line + cyan dot) ===== */
+.video-drawer { width: 560px; }
+.video-drawer .drawer-heading {
+    margin: 0 0 26px; font-family: "Manrope", Arial, sans-serif;
+    font-size: clamp(32px, 2.7vw, 46px); line-height: 1.15; font-weight: 300; color: #fff;
+}
+.video-drawer .drawer-heading .line { display: block; }
+.video-drawer .drawer-heading strong { font-weight: 800; }
+.video-drawer .drawer-heading .dot {
+    display: inline-block; width: 0.2em; height: 0.2em; margin-left: 0.14em;
+    border-radius: 50%; background: #14b1e7;
+}
+
 /* ===== MOBILE ===== */
 @media (max-width: 767.98px) {
     .video-drawer { width: 85%; }
     .video-drawer-content { padding: 30px 22px; }
     .video-drawer h3 { font-size: 24px; }
+    .video-drawer .drawer-heading { font-size: 26px; margin-bottom: 20px; }
     .video-drawer p { font-size: 14px; }
     .video-play-pause { top: 12px; right: 12px; width: 42px; height: 42px; }
     .video-mute-toggle { top: 12px; right: 64px; width: 42px; height: 42px; }
@@ -223,10 +289,15 @@ svg.swiper-navigation-icon { font-size: 20px; height: 14px; }
     .video-swiper .swiper-button-next { width: 34px; height: 34px; }
     .video-swiper .swiper-button-prev::after,
     .video-swiper .swiper-button-next::after { font-size: 13px; }
-    .video-end-popup { width: 85%; padding: 24px 20px; }
-    .video-end-popup img { max-width: 170px; }
-    .video-end-popup p { font-size: 18px; }
-}
+    .video-end-popup { width: 100%; padding: 0; }
+    .end-popup-content { width: 85%; left: 22px; }
+    .video-end-popup p { font-size: 14px; }
+}/* End popup visible hone par drawer completely inactive */
+.video-section.end-popup-active .video-drawer {
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+}.end-popup-active .video-popup {display:none;pointer-events: none;}.end-popup-active .pause-drawer-video{pointer-events: none;}
 </style>
 </head>
 
@@ -258,14 +329,6 @@ svg.swiper-navigation-icon { font-size: 20px; height: 14px; }
                         <span class="volume-off-icon">🔇</span>
                     </button>
 
-                    <!-- END POPUP (last 5 seconds) -->
-                    <div class="video-end-popup">
-                        <img src="https://www.coatsdigital.com/wp-content/uploads/2026/09/GSD-RealMotion-Flyer_logo.png"
-                             alt="GSD RealMotion Logo">
-                        <p>Intelligent Shop Floor for Better Margin With AI</p>
-                        <a href="#" class="btn-learn end-popup-btn">Read More <span>→</span></a>
-                    </div>
-
                     <!-- LEFT DRAWER -->
                     <div class="container">
                         <div class="row">
@@ -279,7 +342,7 @@ svg.swiper-navigation-icon { font-size: 20px; height: 14px; }
                                                  style="width: 200px; margin-bottom: 20px; margin-left: -4px;">
                                             <!-- <span class="video-drawer-label">Reference</span> -->
                                             <!-- <h3>Explore More</h3> -->
-                                            <p>Intelligent Shop Floor for Better Margin With AI</p>
+                                            <h3 class="drawer-heading"><span class="line">Intelligent Shop Floor for</span><strong class="line">Better Margin With AI<span class="dot"></span></strong></h3>
                                             <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video"
                                                target="_blank" rel="noopener noreferrer" class="reference-link">Read More <span>→</span>
                                             </a>
@@ -362,6 +425,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         let autoplayAttempt = false;
+        let endWindow = false; // last 6 sec me true
 
         function setMutedUI(isMuted) {
             wrapper.classList.toggle("is-muted", isMuted);
@@ -369,9 +433,15 @@ document.addEventListener("DOMContentLoaded", function () {
             muteButton.setAttribute("aria-pressed", isMuted ? "true" : "false");
         }
 
+        // function hideEndPopup() {
+        //     if (endPopup) endPopup.classList.remove("show");
+        // }
         function hideEndPopup() {
-            if (endPopup) endPopup.classList.remove("show");
-        }
+    if (endPopup) {
+        endPopup.classList.remove("show");
+        section.classList.remove("end-popup-active");
+    }
+}
 
         /* ---------- VIDEO AUTOPLAY ---------- */
         function startVideo() {
@@ -438,6 +508,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
 
+            endWindow = false;
             section.classList.remove("drawer-open");
             hideEndPopup();
 
@@ -456,26 +527,34 @@ document.addEventListener("DOMContentLoaded", function () {
         const POPUP_BEFORE_END = 6;
 
         video.addEventListener("timeupdate", function () {
-            if (!endPopup || !isFinite(video.duration)) return;
+            if (!isFinite(video.duration)) return;
 
             const remaining = video.duration - video.currentTime;
+            endWindow = remaining <= POPUP_BEFORE_END && remaining > 0;
 
-            if (remaining <= POPUP_BEFORE_END && remaining > 0) {
-                endPopup.classList.add("show");
-            } else {
-                endPopup.classList.remove("show");
+            if (endWindow) {
+                // Same drawer jo click/pause par aata hai
+                if (!section.classList.contains("drawer-open")) {
+                    section.classList.add("drawer-open");
+                }
+            } else if (section.classList.contains("drawer-open") && !video.paused) {
+                section.classList.remove("drawer-open");
             }
         });
 
         /* ---------- VIDEO CLICK = PAUSE ---------- */
         video.addEventListener("click", function () {
-            if (!video.paused) video.pause();
+            if (!video.paused) {
+                video.pause();
+            } else if (endWindow) {
+                video.play().catch(function () {});
+            }
         });
 
         /* ---------- VIDEO PLAY ---------- */
         video.addEventListener("play", function () {
             wrapper.classList.add("is-playing");
-            section.classList.remove("drawer-open");
+            if (!endWindow) section.classList.remove("drawer-open");
             playPauseButton.setAttribute("aria-label", "Pause video");
         });
 
@@ -499,7 +578,7 @@ document.addEventListener("DOMContentLoaded", function () {
             e.stopPropagation();
 
             if (video.paused) {
-                section.classList.remove("drawer-open");
+                if (!endWindow) section.classList.remove("drawer-open");
                 video.muted = false;
                 video.volume = 1;
                 video.play().then(function () {
@@ -547,8 +626,11 @@ document.addEventListener("click", function (e) {
         return;
     }
 
-    // Drawer ke bahar click hua
-    section.classList.remove("drawer-open");
+    // Last 6 sec me video click ko video listener handle karta hai
+    if (endWindow && e.target === video) return;
+
+    // Drawer ke bahar click hua (last 6 sec me drawer khula rehta hai)
+    if (!endWindow) section.classList.remove("drawer-open");
 
     video.muted = false;
     video.volume = 1;
@@ -561,6 +643,7 @@ document.addEventListener("click", function (e) {
 
         /* ---------- VIDEO ENDED ---------- */
         video.addEventListener("ended", function () {
+            endWindow = false;
             section.classList.remove("drawer-open");
             wrapper.classList.remove("is-playing");
             playPauseButton.setAttribute("aria-label", "Play video");
@@ -602,5 +685,4 @@ document.addEventListener("click", function (e) {
 </script>
 
 </body>
-</html>
-<script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="52355fb9-3e7f-4d46-8a4a-cd60d9d4fe1d" data-app-host="app.netlify.com"></script>
+</html> 

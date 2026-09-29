@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=52355fb9-3e7f-4d46-8a4a-cd60d9d4fe1d
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coats Video & Image Swiper</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+body { margin: 0; background: #f5f5f5; font-family: Arial, sans-serif; }
+
+/* ===== VIDEO SECTION ===== */
+.video-section { position: relative; overflow: hidden;height: 650px; }
+
+.video-wrapper { position: relative; width: 100%; height: 100%; overflow: hidden; background: #000; }
+.video-wrapper video { display: block; width: 100%; height: 100%;object-fit: fill; }
+.video-source { height: 100%; width: 100%; object-fit: contain; }
+
+/* ===== PLAY / PAUSE ===== */
+.video-play-pause {
+    position: absolute; top: 20px; right: 20px; width: 48px; height: 48px; z-index: 20;
+    border: 0; border-radius: 50%; background: rgba(0, 42, 84, 0.9); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 16px; transition: all 0.3s ease;
+}
+.video-play-pause:hover { background: #1698b7; }
+.video-play-pause .pause-icon { display: none; }
+.video-wrapper.is-playing .video-play-pause .play-icon { display: none; }
+.video-wrapper.is-playing .video-play-pause .pause-icon { display: inline-block; }
+
+/* ===== MUTE / UNMUTE ===== */
+.video-mute-toggle {
+    position: absolute; top: 20px; right: 80px; width: 48px; height: 48px; z-index: 20;
+    border: 0; border-radius: 50%; background: rgba(0, 42, 84, 0.9); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 17px; transition: all 0.3s ease;
+}
+.video-mute-toggle:hover { background: #1698b7; }
+.video-mute-toggle .volume-off-icon { display: none; }
+.video-wrapper.is-muted .video-mute-toggle .volume-on-icon { display: none; }
+.video-wrapper.is-muted .video-mute-toggle .volume-off-icon { display: inline-block; }
+
+/* ===== LEFT DRAWER ===== */
+.drawer-open .video-popup { margin: auto; position: absolute; top: 0; bottom: 0; left: 13%; z-index: 2;position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.75) 25%,
+    rgba(0, 0, 0, 0.42) 55%,
+    rgba(0, 0, 0, 0.08) 100%
+  ); }
+/* .video-popup::before{ content:"";position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.75) 25%,
+    rgba(0, 0, 0, 0.42) 55%,
+    rgba(0, 0, 0, 0.08) 100%
+  );} */
+.video-drawer {
+    position: absolute; top: 0; bottom: 0; margin: auto;
+    width: 320px; 
+    /* height: fit-content;  */
+    z-index: 3;
+    /* background: #ffffff6e; */
+    transform: translateX(-200%);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    /* box-shadow: 8px 0 30px rgba(0, 0, 0, 0.18); */
+    display: flex; align-items: center; border-radius: 12px;
+    /* backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%); */
+    left: 13%; color: #fff;
+}
+.video-section.drawer-open .video-drawer { transform: translateX(0); }
+
+.video-drawer-content { width: 100%; 
+    /* padding: 40px 30px 40px 40px; */position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+ }
+.video-drawer-label {
+    display: inline-block; margin-bottom: 5px; font-size: 12px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase; color: #fff;
+}
+.video-drawer h3 { margin: 0 0 15px; font-size: 30px; line-height: 1.2; font-weight: 600; color: #fff; }
+.video-drawer p { margin: 0 0 25px; font-size: 16px; line-height: 1.6; color: #fff; }
+
+.reference-link {
+    transition: all 0.3s ease; display: inline-flex; visibility: visible; opacity: 1;
+    align-items: center; justify-content: center; gap: 10px;
+    min-width: 145px; height: 46px; padding: 0 22px; border-radius: 999px;
+    background: #66bd45; border: 1px solid #66bd45; color: #fff;
+    text-decoration: none; font-size: 15px; line-height: 1; font-weight: 700;
+    position: relative; z-index: 5;
+}
+.reference-link:hover { background: #1698b7; color: #fff; }
+
+.drawer-close {
+    position: absolute; top: -40px; right: 15px; width: 34px; height: 34px;
+    border-radius: 50%; background: #f1f1f1; color: #002a54; font-size: 22px;
+    cursor: pointer; z-index: 2; display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s ease; border: 1px solid #002a540a;
+}
+.drawer-close:hover { background: #002a54; color: #fff; }
+
+/* ===== END POPUP (last 5 seconds, exact center, scale 0 -> 100%) ===== */
+.video-end-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 460px;
+    max-width: 90%;
+    z-index: 15;
+    padding: 36px 40px;
+    border-radius: 8px;
+    text-align: center;
+    color: #fff;
+
+    background: linear-gradient(180deg, #00000038 0%, #00000038 50%, #00000038 100%);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    /* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35); */
+
+    opacity: 0;
+    pointer-events: none;
+
+    transform: translate(-50%, -50%) scale(0);
+
+    /* Smooth 0 → 100% without bounce */
+    transition:
+        transform 0.6s ease-out,
+        opacity 0.4s ease; 
+}
+
+.video-end-popup.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+.video-end-popup img {
+    width: 100%; max-width: 240px; margin-bottom: 20px;
+    background: #fff; padding: 10px 14px; border-radius: 10px;
+}
+.video-end-popup p { margin: 0 0 24px; font-size: 26px; line-height: 1.3; font-weight: 600; color: #fff; }
+.video-end-popup .end-popup-btn { transform: none; }
+.video-end-popup .end-popup-btn:hover {
+    background: #fff !important; border-color: #fff !important; color: #66bd45 !important;
+}
+
+/* ===== SWIPER ===== */
+.video-swiper { width: 100%; position: relative;height: 100%; }
+.video-swiper .swiper-wrapper { align-items: stretch;
+     /* height: 100vh;  */
+}
+.video-swiper .swiper-slide { height: auto; position: relative; }
+.image-slide { overflow: hidden; background: #000; }
+.image-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.video-swiper .swiper-button-prev,
+.video-swiper .swiper-button-next {
+    width: 42px; height: 42px; border-radius: 50%; background: rgba(0, 42, 84, 0.9); color: #fff;
+}
+.video-swiper .swiper-button-prev:hover,
+.video-swiper .swiper-button-next:hover { background: #1698b7; }
+.video-swiper .swiper-button-prev::after,
+.video-swiper .swiper-button-next::after { font-size: 16px; font-weight: 700; }
+.video-swiper .swiper-pagination-bullet { opacity: 1; background: #fff; }
+.video-swiper .swiper-pagination-bullet-active { background: #1698b7; }
+svg.swiper-navigation-icon { font-size: 20px; height: 14px; }
+
+/* ===== BANNER CONTENT ===== */
+.banner-content {
+    position: absolute; z-index: 3; left: 13%; top: 45%; transform: translateY(-50%);
+    width: 540px; max-width: 42vw; color: #fff;
+}
+.banner-title {
+    margin: 0 0 26px !important; padding: 0 !important;
+    font-size: clamp(46px, 3.05vw, 58px) !important;
+    line-height: 1.14 !important; font-weight: 400 !important;
+}
+.banner-title strong { display: block; font-weight: 700 !important; }
+.banner-content p {
+    max-width: 450px; width: 450px; margin: 0 0 26px !important; padding: 0 !important;
+    font-size: clamp(17px, 1.05vw, 21px) !important; line-height: 1.55 !important; font-weight: 400 !important;
+}
+.btn-learn {
+    display: inline-flex !important; visibility: visible !important; opacity: 1 !important;
+    align-items: center; justify-content: center; gap: 10px;
+    min-width: 145px; height: 46px; padding: 0 22px; border-radius: 999px;
+    background: #66bd45 !important; border: 1px solid #66bd45 !important; color: #fff !important;
+    text-decoration: none !important; font-size: 15px; line-height: 1; font-weight: 700;
+    position: relative; z-index: 5; transform: translateY(20px); transition: all .4s ease;
+}
+.btn-learn:hover { background: #fff !important; color: #66bd45 !important; }
+.banner-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.75) 25%, rgba(0,0,0,0.42) 55%, rgba(0,0,0,0.08) 100%);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 767.98px) {
+    .video-drawer { width: 85%; }
+    .video-drawer-content { padding: 30px 22px; }
+    .video-drawer h3 { font-size: 24px; }
+    .video-drawer p { font-size: 14px; }
+    .video-play-pause { top: 12px; right: 12px; width: 42px; height: 42px; }
+    .video-mute-toggle { top: 12px; right: 64px; width: 42px; height: 42px; }
+    .video-swiper .swiper-button-prev,
+    .video-swiper .swiper-button-next { width: 34px; height: 34px; }
+    .video-swiper .swiper-button-prev::after,
+    .video-swiper .swiper-button-next::after { font-size: 13px; }
+    .video-end-popup { width: 85%; padding: 24px 20px; }
+    .video-end-popup img { max-width: 170px; }
+    .video-end-popup p { font-size: 18px; }
+}
+</style>
+</head>
+
+<body>
+
+<section class="video-section">
+    <div class="swiper video-swiper">
+        <div class="swiper-wrapper">
+
+            <!-- VIDEO SLIDE -->
+            <div class="swiper-slide">
+                <div class="video-wrapper">
+
+                    <video class="pause-drawer-video" preload="auto" autoplay playsinline>
+                        <source src="https://dev.coatsdigital.com/wp-content/uploads/2026/09/web-banner.mp4"
+                                type="video/mp4" class="video-source">
+                        Your browser does not support HTML5 video.
+                    </video>
+
+                    <!-- PLAY / PAUSE -->
+                    <button type="button" class="video-play-pause" aria-label="Pause video">
+                        <span class="play-icon">▶</span>
+                        <span class="pause-icon">❚❚</span>
+                    </button>
+
+                    <!-- MUTE / UNMUTE -->
+                    <button type="button" class="video-mute-toggle" aria-label="Mute video" aria-pressed="false">
+                        <span class="volume-on-icon">🔊</span>
+                        <span class="volume-off-icon">🔇</span>
+                    </button>
+
+                    <!-- END POPUP (last 5 seconds) -->
+                    <div class="video-end-popup">
+                        <img src="https://www.coatsdigital.com/wp-content/uploads/2026/09/GSD-RealMotion-Flyer_logo.png"
+                             alt="GSD RealMotion Logo">
+                        <p>Intelligent Shop Floor for Better Margin With AI</p>
+                        <a href="#" class="btn-learn end-popup-btn">Read More <span>→</span></a>
+                    </div>
+
+                    <!-- LEFT DRAWER -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="video-popup">
+                                    <div class="video-drawer">
+                                        <div class="video-drawer-content">
+                                        <button type="button" class="drawer-close" aria-label="Close drawer">&times;</button>
+                                            <img src="https://www.coatsdigital.com/wp-content/uploads/2026/09/GSD-RealMotion-Flyer_logo.png"
+                                                 alt="GSD RealMotion Logo"
+                                                 style="width: 200px; margin-bottom: 20px; margin-left: -15px;">
+                                            <span class="video-drawer-label">Reference</span>
+                                            <h3>Explore More</h3>
+                                            <p>Want to know more about this video? Check the reference link below.</p>
+                                            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video"
+                                               target="_blank" rel="noopener noreferrer" class="reference-link">
+                                                View Reference <span>→</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- IMAGE SLIDE 1 -->
+            <div class="swiper-slide image-slide">
+                <img src="https://dev.coatsdigital.com/wp-content/uploads/2026/07/Image-coats-1.jpg" alt="Coats">
+                <div class="banner-overlay"></div>
+                <div class="banner-content">
+                    <h1 class="banner-title">
+                        Coats and JACK
+                        <strong>announce strategic partnership</strong>
+                    </h1>
+                    <p>Coats and Jack signed a Memorandum of Strategic Cooperation to accelerate innovation for China’s fast-growing small-to-medium-sized (SME) apparel manufacturing sector.</p>
+                    <a href="#" class="btn-learn">Learn More <span>→</span></a>
+                </div>
+            </div>
+
+            <!-- IMAGE SLIDE 2 -->
+            <div class="swiper-slide image-slide">
+                <img src="https://dev.coatsdigital.com/wp-content/uploads/2026/09/Hero_banner.jpg" alt="Coats Hero Banner">
+                <div class="banner-overlay"></div>
+                <div class="banner-content">
+                    <h1 class="banner-title">
+                        Real - Time Shop Floor
+                        <strong>Intelligence for better Margins</strong>
+                    </h1>
+                    <p>GSD RealMotion makes the real method on your shop floor visible, measurable and improvable, from a phone video, in minutes instead of hours.</p>
+                    <a href="#" class="btn-learn">Learn More <span>→</span></a>
+                </div>
+            </div>
+
+            <!-- IMAGE SLIDE 3 -->
+            <div class="swiper-slide image-slide">
+                <img src="https://dev.coatsdigital.com/wp-content/uploads/2026/07/Image-coats-.jpg" alt="Coats">
+                <div class="banner-overlay"></div>
+                <div class="banner-content">
+                    <h1 class="banner-title">
+                        Coats and JACK
+                        <strong>announce strategic partnership</strong>
+                    </h1>
+                    <p>The integrated solution will help SME manufacturers in China to identify and address shop floor inefficiencies in real-time, improve productivity and manage inventory levels more effectively.</p>
+                    <a href="#" class="btn-learn">Learn More <span>→</span></a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".video-section").forEach(function (section) {
+
+        const swiperElement = section.querySelector(".video-swiper");
+        const video = section.querySelector(".pause-drawer-video");
+        const wrapper = section.querySelector(".video-wrapper");
+        const playPauseButton = section.querySelector(".video-play-pause");
+        const muteButton = section.querySelector(".video-mute-toggle");
+        const drawerClose = section.querySelector(".drawer-close");
+        const endPopup = section.querySelector(".video-end-popup");
+
+        if (!swiperElement || !video || !wrapper || !playPauseButton || !muteButton || !drawerClose) {
+            return;
+        }
+
+        let autoplayAttempt = false;
+
+        function setMutedUI(isMuted) {
+            wrapper.classList.toggle("is-muted", isMuted);
+            muteButton.setAttribute("aria-label", isMuted ? "Unmute video" : "Mute video");
+            muteButton.setAttribute("aria-pressed", isMuted ? "true" : "false");
+        }
+
+        function hideEndPopup() {
+            if (endPopup) endPopup.classList.remove("show");
+        }
+
+        /* ---------- VIDEO AUTOPLAY ---------- */
+        function startVideo() {
+            // First try autoplay WITH audio
+            video.muted = false;
+            video.volume = 1;
+            setMutedUI(false);
+
+            const playPromise = video.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(function () {
+                    setMutedUI(false);
+                    autoplayAttempt = true;
+                }).catch(function () {
+                    // Browser blocked audible autoplay -> start muted
+                    video.muted = true;
+                    video.volume = 1;
+                    setMutedUI(true);
+
+                    video.play().then(function () {
+                        autoplayAttempt = true;
+                    }).catch(function () {});
+                });
+            }
+        }
+
+        /* ---------- SWIPER ---------- */
+        const videoimgswiper = new Swiper(swiperElement, {
+            slidesPerView: 1,
+            loop: true,
+            speed: 700,
+            navigation: {
+                nextEl: section.querySelector(".swiper-button-next"),
+                prevEl: section.querySelector(".swiper-button-prev")
+            },
+            pagination: {
+                el: section.querySelector(".swiper-pagination"),
+                clickable: true
+            },
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: false
+            },
+            on: {
+                init: function () { handleSlideChange(this); },
+                slideChangeTransitionStart: function () { handleSlideChange(this); }
+            }
+        });
+
+        /* ---------- ACTIVE SLIDE ---------- */
+        function handleSlideChange(swiperInstance) {
+            const activeSlide = swiperInstance.slides[swiperInstance.activeIndex];
+            if (!activeSlide) return;
+
+            const activeVideo = activeSlide.querySelector("video");
+
+            // Stop all other videos
+            swiperInstance.el.querySelectorAll("video").forEach(function (otherVideo) {
+                if (otherVideo !== activeVideo) {
+                    otherVideo.pause();
+                    otherVideo.currentTime = 0;
+                }
+            });
+
+            section.classList.remove("drawer-open");
+            hideEndPopup();
+
+            if (activeVideo) {
+                // Video slide: stop swiper autoplay, play video from start
+                swiperInstance.autoplay.stop();
+                activeVideo.currentTime = 0;
+                startVideo();
+            } else {
+                // Image slide: change every 3 seconds
+                swiperInstance.autoplay.start();
+            }
+        }
+
+        /* ---------- END POPUP: LAST 5 SECONDS ---------- */
+        const POPUP_BEFORE_END = 6;
+
+        video.addEventListener("timeupdate", function () {
+            if (!endPopup || !isFinite(video.duration)) return;
+
+            const remaining = video.duration - video.currentTime;
+
+            if (remaining <= POPUP_BEFORE_END && remaining > 0) {
+                endPopup.classList.add("show");
+            } else {
+                endPopup.classList.remove("show");
+            }
+        });
+
+        /* ---------- VIDEO CLICK = PAUSE ---------- */
+        video.addEventListener("click", function () {
+            if (!video.paused) video.pause();
+        });
+
+        /* ---------- VIDEO PLAY ---------- */
+        video.addEventListener("play", function () {
+            wrapper.classList.add("is-playing");
+            section.classList.remove("drawer-open");
+            playPauseButton.setAttribute("aria-label", "Pause video");
+        });
+
+        /* ---------- VIDEO PAUSE ---------- */
+        video.addEventListener("pause", function () {
+            if (video.ended) return;
+
+            // Ignore browser's temporary pause during initial autoplay
+            if (!autoplayAttempt) return;
+
+            wrapper.classList.remove("is-playing");
+            section.classList.add("drawer-open");
+            playPauseButton.setAttribute("aria-label", "Play video");
+
+            videoimgswiper.autoplay.stop();
+        });
+
+        /* ---------- PLAY / PAUSE BUTTON ---------- */
+        playPauseButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (video.paused) {
+                section.classList.remove("drawer-open");
+                video.muted = false;
+                video.volume = 1;
+                video.play().then(function () {
+                    autoplayAttempt = true;
+                }).catch(function () {});
+            } else {
+                video.pause();
+            }
+        });
+
+        /* ---------- MUTE / UNMUTE ---------- */
+        muteButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            video.muted = !video.muted;
+            setMutedUI(video.muted);
+        });
+
+        /* ---------- DRAWER CLOSE ---------- */
+        drawerClose.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            section.classList.remove("drawer-open");
+
+            video.muted = false;
+            video.volume = 1;
+            setMutedUI(false);
+
+            video.play().then(function () {
+                autoplayAttempt = true;
+            }).catch(function () {});
+        });
+
+        /* ---------- VIDEO ENDED ---------- */
+        video.addEventListener("ended", function () {
+            section.classList.remove("drawer-open");
+            wrapper.classList.remove("is-playing");
+            playPauseButton.setAttribute("aria-label", "Play video");
+            hideEndPopup();
+
+            videoimgswiper.autoplay.stop();
+
+            // Go to next slide only after the full video finishes
+            videoimgswiper.slideNext();
+        });
+
+        /* ---------- USER DRAGS SWIPER ---------- */
+        videoimgswiper.on("touchStart", function () {
+            videoimgswiper.autoplay.stop();
+        });
+
+        /* ---------- FIRST USER INTERACTION: ENABLE AUDIO ---------- */
+        function enableAudioAfterInteraction() {
+            const slide = video.closest(".swiper-slide");
+
+            if (video.paused || !slide || !slide.classList.contains("swiper-slide-active")) {
+                return;
+            }
+
+            if (video.muted) {
+                video.muted = false;
+                video.volume = 1;
+                setMutedUI(false);
+            }
+        }
+
+        document.addEventListener("click", enableAudioAfterInteraction, { once: true });
+        document.addEventListener("touchstart", enableAudioAfterInteraction, { once: true });
+        document.addEventListener("keydown", enableAudioAfterInteraction, { once: true });
+
+    });
+
+});
+</script>
+
+</body>
+</html>
+<script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="52355fb9-3e7f-4d46-8a4a-cd60d9d4fe1d" data-app-host="app.netlify.com"></script>

@@ -279,15 +279,30 @@ svg.swiper-navigation-icon { font-size: 20px; height: 14px; }
 
 /* ===== MOBILE ===== */
 @media (max-width: 767.98px) {
-    .video-drawer { width: 85%; }
-    .video-drawer-content { padding: 30px 22px; }
+    .video-drawer { width: 100%;left: 5%;transform: translateX(0%);width: 100%;
+        max-width: 90vw;
+        padding: 0 20px;
+        left: 0;
+        position: relative;
+        top: -40px;
+        transform: none;
+        padding: 15px;
+        margin: auto;
+        background: #00000059;
+        border-radius: 10px;
+        backdrop-filter: blur(5px); } 
     .video-drawer h3 { font-size: 24px; }
-    .video-drawer .drawer-heading { font-size: 26px; margin-bottom: 20px; }
+    .video-drawer .drawer-heading { font-size: 20px;line-height: 30px; margin-bottom: 10px; }.reference-link{height: auto;padding: 10px 15px;font-weight: 500;font-size: 14px;}.video-section{height: auto;}.video-wrapper video{object-fit: contain;}.video-drawer-content img{width: 150px !important;margin-bottom: 10px !important;}.banner-content{width: 100%;max-width: 90vw;padding: 0 20px;left: 0;position: relative;top: -40px; transform: none;padding: 15px;margin: auto;background: #00000059;border-radius: 10px;backdrop-filter: blur(5px);}.banner-overlay{background: transparent;}.banner-title{font-size: 22px !important;margin-bottom: 10px !important;}.banner-content p{font-size: 14px !important;margin-bottom: 10px !important;width: 100%;}.btn-learn{min-width: auto;
+        height: auto;
+        font-size: 13px;
+        transform: translateY(0px);
+        display: inline-block !important;
+        padding: 10px 20px;}.video-end-popup{width: 90%;padding: 20px;}.end-popup-content{width: 90%;left: 5px;}.video-end-popup img{width: 120px;margin-bottom: 10px;}.image-slide img, .video-wrapper video{object-fit: contain;height: auto;}.image-slide, .video-wrapper{background:transparent;}
     .video-drawer p { font-size: 14px; }
     .video-play-pause { top: 12px; right: 12px; width: 42px; height: 42px; }
     .video-mute-toggle { top: 12px; right: 64px; width: 42px; height: 42px; }
     .video-swiper .swiper-button-prev,
-    .video-swiper .swiper-button-next { width: 34px; height: 34px; }
+    .video-swiper .swiper-button-next { width: 28px; height: 28px; }
     .video-swiper .swiper-button-prev::after,
     .video-swiper .swiper-button-next::after { font-size: 13px; }
     .video-end-popup { width: 100%; padding: 0; }
@@ -412,7 +427,7 @@ svg.swiper-navigation-icon { font-size: 20px; height: 14px; }
 <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-
+ 
     document.querySelectorAll(".video-section").forEach(function (section) {
 
         const swiperElement = section.querySelector(".video-swiper");
@@ -546,13 +561,20 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         /* ---------- VIDEO CLICK = PAUSE ---------- */
-        video.addEventListener("click", function () {
-            if (!video.paused) {
-                video.pause();
-            } else if (endWindow) {
-                video.play().catch(function () {});
-            }
-        });
+      /* ---------- VIDEO CLICK = PAUSE ---------- */
+video.addEventListener("click", function () {
+
+    // 992px se neeche video click par kuch nahi hoga
+    if (window.innerWidth < 992) {
+        return;
+    }
+
+    if (!video.paused) {
+        video.pause();
+    } else if (endWindow) {
+        video.play().catch(function () {});
+    }
+});
 
         /* ---------- VIDEO PLAY ---------- */
         video.addEventListener("play", function () {
